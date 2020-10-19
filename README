@@ -1,0 +1,62 @@
+Brock Forsythe COSC420	Lab3
+
+
+Old Process:
+
+rows/cols    10 nodes     20 nodes    30 nodes    40 nodes    50 nodes
+10000         1.590s	  2.629s      6.098s       25.168s    52.022s
+10000	      1.579s	  2.568s      6.440s	   14.255s    51.286s	
+10000	      1.580s	  2.621s      6.017s       7.975s     53.889s
+10000         1.551s      2.568s      6.109s       7.870s     52.589s
+10000	      1.562s	  2.579s      6.039s       8.431s     48.098s
+
+AVG Times:
+10 nodes: 1.5724s
+20 nodes: 2.5926s
+30 nodes: 6.1406s
+40 nodes: 12.7398s
+50 nodes: 51.3732s
+
+New Process:
+
+rows/cols    10 nodes     20 nodes    30 nodes    40 nodes    50 nodes
+10000	     	.321	  .719		1.139	  1.223		1.517	
+10000		.377	  .541		1.011	  1.226		1.669
+10000		.325	  .643		1.163	  1.067		1.900
+10000		.354	  1.083		.995	  1.819		1.725
+10000		.373	  .860		1.123	  1.035		1.660
+
+AVG Times:
+10 nodes: .35s
+20 nodes: .769s
+30 nodes: 1.086s
+40 nodes: 1.274s
+50 nodes: 1.694s
+
+By using a different Parallel processor division (Scatterv and Gatherv), the data proccessed per second greatly increased as shown in above data.
+
+A) 			Best Case	Worst Case
+	Matrix Mult	O(N)		O(NlogN)
+	Matrix Add	O(N)		O(NlogN)
+	Matrix Sub	O(N)		O(NlogN)
+
+Time complexity of the Addition, Multiplication, and Subtraction loops is O(N)
+Best Case Time Complexity of MPIScatterv is 1 while worst case is logN
+Best Case Time complexity of MPIGatherv is 1 while worst case is logN
+
+B) According to the data received, adding more nodes will not perfectly divide the time taken to compute. 
+	Since it takes more time initially to disperse the data to each node, the calculations can then be done faster
+
+C) One possible example of using the above routines could be finding the values of PI. By splitting up the known values of PI, this process could be used to find more numbers at a faster rate since there are an extremely large amount
+of numbers that make up PI.
+
+D) The code is already split up into rows of data but one possibility of making the code more efficient may be to 
+split the info in each row up to then gather together, thus reducing the work done by each node by another half or so
+depending on how many times the rows/cols of the matrices are divided.
+
+Example code:
+time mpiexec -n 10 ./main 10 100 100 100 100
+
+real	0m0.031s
+user	0m0.047s
+sys	0m0.80s
